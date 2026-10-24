@@ -14,15 +14,14 @@ Description: Decomposes the observed log2 fold change of each gene in a bulk
     dual-reference comparison, automatic input validation that stops on a
     log-scaled or misaligned reference, a known-answer self test, and a
     pseudo-bulk simulator. The framework is described in Hu (2026)
-    <doi:10.5281/zenodo.23598561>.
+    <doi:10.5281/zenodo.23609651>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports: stats, utils
-Suggests: testthat (>= 3.0.0), limma, ggplot2, BayesPrism, Seurat, knitr,
-    rmarkdown
+Suggests: testthat (>= 3.0.0), limma, ggplot2
 Config/testthat/edition: 3
 LazyData: true
-URL: https://doi.org/10.5281/zenodo.23598561
-BugReports: https://doi.org/10.5281/zenodo.23598561
+URL: https://github.com/ChengHu2024/cade
+BugReports: https://github.com/ChengHu2024/cade/issues
 Config/roxygen2/version: 8.1.1
