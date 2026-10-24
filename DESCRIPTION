@@ -1,0 +1,28 @@
+Package: cade
+Type: Package
+Title: Composition Attribution of Differential Expression
+Version: 0.9.0
+Authors@R: person("Cheng", "Hu", email = "2024184006@hrbmu.edu.cn",
+                  role = c("aut", "cre", "cph"),
+                  comment = c(ORCID = "0009-0009-4627-0229"))
+Description: Decomposes the observed log2 fold change of each gene in a bulk
+    transcriptome comparison into a component implied by a change in cell-type
+    composition and a residual component attributable to regulation within
+    cells, and gates that decomposition with explicit diagnostics. Provides
+    calibration that separates filtering by expression level (valid) from
+    filtering by effect size (circular), reference-quality checks including a
+    dual-reference comparison, automatic input validation that stops on a
+    log-scaled or misaligned reference, a known-answer self test, and a
+    pseudo-bulk simulator. The framework is described in Hu (2026)
+    <doi:10.5281/zenodo.23598561>.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 4.0)
+Imports: stats, utils
+Suggests: testthat (>= 3.0.0), limma, ggplot2, BayesPrism, Seurat, knitr,
+    rmarkdown
+Config/testthat/edition: 3
+LazyData: true
+URL: https://doi.org/10.5281/zenodo.23598561
+BugReports: https://doi.org/10.5281/zenodo.23598561
+Config/roxygen2/version: 8.1.1
