@@ -1,0 +1,9 @@
+^branding$
+^dev$
+^\.github$
+^\.gitattributes$
+^\.gitignore$
+^_trial$
+^_staging$
+^.*\.Rcheck$
+^\.Rlib$
