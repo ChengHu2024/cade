@@ -1,0 +1,15 @@
+# R
+.Rlib/
+*.Rcheck/
+*.tar.gz
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# output
+output/
+
+# OS
+.DS_Store
+Thumbs.db
