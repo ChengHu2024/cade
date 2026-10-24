@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://gcore.jsdelivr.net/gh/ChengHu2024/cade@main/branding/logo-for-dark.png">
+    <img src="https://gcore.jsdelivr.net/gh/ChengHu2024/cade@main/branding/logo-for-light.png" width="400" alt="cade">
+  </picture>
+</p>
+
 # cade
 
 <!-- badges: start -->
