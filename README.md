@@ -9,8 +9,8 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ChengHu2024/cade/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ChengHu2024/cade/actions/workflows/R-CMD-check.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23609651.svg)](https://doi.org/10.5281/zenodo.23609651)
-[![Version](https://img.shields.io/badge/version-6.0.0-informational.svg)](https://doi.org/10.5281/zenodo.23609651)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23609650.svg)](https://doi.org/10.5281/zenodo.23609650)
+[![Version](https://img.shields.io/badge/version-6.0.0-informational.svg)](https://doi.org/10.5281/zenodo.23609650)
 <!-- badges: end -->
 
 **Composition Attribution of Differential Expression**
@@ -205,14 +205,26 @@ the known-answer results quoted above. You can run both yourself.
                (R package, v6.0.0)},
   year      = {2026},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.23609651},
-  url       = {https://doi.org/10.5281/zenodo.23609651}
+  doi       = {10.5281/zenodo.23609650},
+  url       = {https://doi.org/10.5281/zenodo.23609650}
 }
 ```
 
-The method is described in a manuscript in preparation. The first application
-of CADE — a four-cohort composition-attribution analysis in a cardiovascular
-disease — is also in preparation by the same author.
+The method is described in a preprint:
+
+> Hu C. The identifiability boundary of composition attribution in bulk
+> transcriptomics: a methodological study. Zenodo; 2026.
+> doi:10.5281/zenodo.23655967
+
+The first application of CADE - a four-cohort composition-attribution analysis
+in abdominal aortic aneurysm - is deposited with its frozen data package:
+
+> Hu C. Frozen analysis package for the identifiability boundary of composition
+> attribution in bulk transcriptomics. Zenodo; 2026.
+> doi:10.5281/zenodo.23656096
+
+A companion manuscript on six failure modes is included in the same Zenodo
+record as the methodology paper.
 
 ---
 
