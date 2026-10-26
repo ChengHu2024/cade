@@ -40,8 +40,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports: stats, utils
-Suggests: testthat (>= 3.0.0), limma, ggplot2, BayesPrism, Seurat, knitr,
-    rmarkdown
+Suggests: testthat (>= 3.0.0), limma, ggplot2, knitr, rmarkdown
 Config/testthat/edition: 3
 LazyData: true
 URL: https://doi.org/10.5281/zenodo.23598561
