@@ -7,3 +7,5 @@
 ^_staging$
 ^.*\.Rcheck$
 ^\.Rlib$
+^\.github$
+^\.gitattributes$
