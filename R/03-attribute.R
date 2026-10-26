@@ -2,7 +2,7 @@
 # cade: gene-level attribution and effect sizes
 #
 # The decomposition gives a continuous residual. Turning it into discrete
-# labels ("composition-driven" / "mixed" / "cell-intrinsic") is convenient for
+# labels ("composition-driven" / "mixed" / "residual") is convenient for
 # a table but introduces thresholds that are not implied by the algebra. The
 # manuscript's position is therefore:
 #
@@ -18,7 +18,7 @@
 #' @param decomp Output of [decompose_composition()].
 #' @param lower,upper Thresholds on `pct = resid / obs`.
 #'   `pct <= lower` -> "composition-driven" (the residual explains little of
-#'   the observed change); `pct >= upper` -> "cell-intrinsic"; otherwise
+#'   the observed change); `pct >= upper` -> "residual"; otherwise
 #'   "mixed".
 #' @param min_obs Genes with `|obs|` below this are labelled "unchanged"
 #'   regardless of `pct`, because `pct` is unstable when `obs` is near zero.
@@ -72,7 +72,7 @@ attribute_genes <- function(decomp, lower = 0.3, upper = 0.7, min_obs = 0) {
   ok <- !unchanged & !overshoot
   out$class[ok] <- ifelse(
     out$pct[ok] <= lower, "composition-driven",
-    ifelse(out$pct[ok] >= upper, "cell-intrinsic", "mixed"))
+    ifelse(out$pct[ok] >= upper, "residual", "mixed"))
   out$class_reason[ok] <- sprintf("pct = %.2f (lower = %.2f, upper = %.2f)",
                                   out$pct[ok], lower, upper)
   out
@@ -88,7 +88,7 @@ attribute_genes <- function(decomp, lower = 0.3, upper = 0.7, min_obs = 0) {
 #' @param min_obs As in [attribute_genes()].
 #'
 #' @return A data frame with one row per gene and the fraction of thresholds
-#'   at which the gene is labelled `cell-intrinsic`.
+#'   at which the gene is labelled `residual`.
 #'
 #' @details
 #' A gene labelled intrusive at only one of several thresholds is not a stable
@@ -135,7 +135,7 @@ attribute_sensitivity <- function(decomp, thresholds = seq(0.2, 0.45, by = 0.05)
     pct               = decomp$pct,
     mean_obs_effect   = decomp$obs,
     n_thresholds      = length(thresholds),
-    frac_intrinsic    = rowMeans(cls == "cell-intrinsic"),
+    frac_residual     = rowMeans(cls == "residual"),
     frac_composition  = rowMeans(cls == "composition-driven"),
     frac_mixed        = rowMeans(cls == "mixed"),
     stable            = apply(cls, 1, function(r) length(unique(r)) == 1),

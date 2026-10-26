@@ -173,7 +173,7 @@ test_that("attribute_genes labels the three regimes", {
                   pred = c(0.95, 0.5, 0.05), resid = c(0.05, 0.5, 0.95),
                   pct = c(0.05, 0.5, 0.95), mean_expr = 1)
   out <- attribute_genes(d)
-  expect_equal(out$class, c("composition-driven", "mixed", "cell-intrinsic"))
+  expect_equal(out$class, c("composition-driven", "mixed", "residual"))
 })
 
 test_that("attribute_genes marks near-zero obs as unchanged", {

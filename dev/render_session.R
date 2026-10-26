@@ -1,10 +1,10 @@
 # ============================================================================
 # 把真实控制台会话渲染成图（两栏：正常工作 / 拒绝）
 # ============================================================================
-.libPaths(c(file.path("..", ".Rlib"), .libPaths()))
+.libPaths(c("C:/文献/主动脉瘤_从头重算_20261022/packages/.Rlib", .libPaths()))
 suppressPackageStartupMessages(library(ggplot2))
 
-OUT <- "branding"
+OUT <- "C:/文献/主动脉瘤_从头重算_20261022/packages/cade/branding"
 TXT <- file.path(OUT, "console_session.txt")
 
 raw <- readLines(TXT, encoding = "UTF-8", warn = FALSE)

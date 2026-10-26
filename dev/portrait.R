@@ -1,9 +1,9 @@
 # ============================================================================
 # CADE 肖像 v2
 # ============================================================================
-.libPaths(c(file.path("..", ".Rlib"), .libPaths()))
+.libPaths(c("C:/文献/主动脉瘤_从头重算_20261022/packages/.Rlib", .libPaths()))
 suppressPackageStartupMessages({ library(ggplot2) })
-OUT <- "branding"
+OUT <- "C:/文献/主动脉瘤_从头重算_20261022/packages/cade/branding"
 dir.create(OUT, showWarnings = FALSE, recursive = TRUE)
 
 FAM   <- "Microsoft YaHei"

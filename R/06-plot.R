@@ -95,9 +95,9 @@ plot_decomposition <- function(decomp, genes = NULL, facet = NULL,
 
   long <- rbind(
     data.frame(gene = d$gene, comp = "composition", value = d$pred),
-    data.frame(gene = d$gene, comp = "cell-intrinsic", value = d$resid)
+    data.frame(gene = d$gene, comp = "residual", value = d$resid)
   )
-  long$comp <- factor(long$comp, levels = c("composition", "cell-intrinsic"))
+  long$comp <- factor(long$comp, levels = c("composition", "residual"))
   pts <- data.frame(gene = d$gene, value = d$obs)
   if (!is.null(facet)) {
     long$facet <- rep(facet, length.out = nrow(long))
@@ -112,7 +112,7 @@ plot_decomposition <- function(decomp, genes = NULL, facet = NULL,
     ggplot2::geom_point(data = pts, ggplot2::aes(x = gene, y = value),
                         shape = 18, size = 2.4, colour = "black") +
     ggplot2::scale_fill_manual(values = c(composition = "#9ecae1",
-                                          `cell-intrinsic` = "#fc9272")) +
+                                          `residual` = "#fc9272")) +
     ggplot2::labs(x = NULL, y = "log2 fold change", fill = NULL,
                   title = "Observed change decomposed (diamond = observed)") +
     ggplot2::theme_bw(base_size = 10) +

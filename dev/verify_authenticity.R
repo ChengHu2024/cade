@@ -4,11 +4,11 @@
 # 这脚本做的不是"再跑一遍看结果"，而是**逐位比对**：
 #   同一输入 → 旧路径 vs 新路径 → 用 identical() 比
 # ============================================================================
-.libPaths(c(file.path("..", ".Rlib"), .libPaths()))
+.libPaths(c("C:/文献/主动脉瘤_从头重算_20261022/packages/.Rlib", .libPaths()))
 suppressPackageStartupMessages(library(cade))
 set.seed(20261024)
 
-OUT <- "branding"
+OUT <- "C:/文献/主动脉瘤_从头重算_20261022/packages/cade/branding"
 
 cat("\n")
 cat("=============================================================\n")
@@ -97,7 +97,7 @@ cat(sprintf("\n  self_test 总体: %s\n\n", ifelse(st$pass, "PASSED", "FAILED"))
 cat("=============================================================\n")
 cat("  验证 5：便利层没有调用任何计算函数（静态检查）\n")
 cat("=============================================================\n\n")
-files <- list.files("R",
+files <- list.files("C:/文献/主动脉瘤_从头重算_20261022/packages/cade/R",
                     pattern="0[89]-", full.names=TRUE)
 strip_comments <- function(lines) {
   lines <- sub("^\\s*#'?.*$", "", lines)   # 去掉整行注释与 roxygen

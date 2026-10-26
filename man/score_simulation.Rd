@@ -32,10 +32,13 @@ The informative quantities are:
 * `cor_resid`: does the residual recover the injected within-cell term?
 * `recovery_intrinsic`: the mean of `resid / intrinsic` over the injected
   genes. `1` means perfect recovery; a value near `0.3` means the framework
-  attributes most of the injected change to composition.
+  attributes most of the injected change to composition. This is meaningful
+  only because the simulator draws both groups from the same reference that
+  is passed to the decomposition, so the control group's deviation is zero by
+  construction. With an external atlas that does not hold.
 * `false_positive_rate`: among genes with no injected change, the fraction
-  whose residual exceeds a tolerance. These are genes wrongly called
-  cell-intrinsic.
+  whose residual exceeds a tolerance. These are genes wrongly flagged as
+  carrying a within-cell change.
 }
 \examples{
 mu <- matrix(c(100, 10, 50, 5, 20, 2), nrow = 3,

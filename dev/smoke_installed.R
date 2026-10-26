@@ -1,4 +1,4 @@
-.libPaths(c(file.path("..", ".Rlib"), .libPaths()))
+.libPaths(c("C:/文献/主动脉瘤_从头重算_20261022/packages/.Rlib", .libPaths()))
 suppressPackageStartupMessages({ library(cade); library(limma) })
 
 cat("=== 已安装包冒烟测试（500 基因）===\n\n")

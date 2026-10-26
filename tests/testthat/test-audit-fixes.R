@@ -13,7 +13,7 @@ test_that("P3: attribute_sensitivity returns ONE row for one gene", {
   expect_equal(nrow(s), 1)
   expect_equal(s$gene, "a")
   expect_equal(s$n_thresholds, 6)              # seq(0.2, 0.45, 0.05)
-  expect_true(s$frac_intrinsic >= 0 && s$frac_intrinsic <= 1)
+  expect_true(s$frac_residual >= 0 && s$frac_residual <= 1)
 })
 
 test_that("P3: a single threshold does not collapse the matrix", {
@@ -36,8 +36,8 @@ test_that("P3: stability of a single gene matches the multi-gene case", {
     one <- attribute_sensitivity(d[d$gene == g, ])
     expect_equal(one$stable, all3$stable[all3$gene == g],
                  label = sprintf("stable for gene %s", g))
-    expect_equal(one$frac_intrinsic, all3$frac_intrinsic[all3$gene == g],
-                 label = sprintf("frac_intrinsic for gene %s", g))
+    expect_equal(one$frac_residual, all3$frac_residual[all3$gene == g],
+                 label = sprintf("frac_residual for gene %s", g))
   }
 })
 
@@ -64,13 +64,13 @@ test_that("P7: same-sign genes are still classified by pct", {
                   pred = c(0.95, 0.5, 0.05), resid = c(0.05, 0.5, 0.95),
                   pct = c(0.05, 0.5, 0.95), mean_expr = 1)
   expect_equal(attribute_genes(d)$class,
-               c("composition-driven", "mixed", "cell-intrinsic"))
+               c("composition-driven", "mixed", "residual"))
 })
 
 test_that("P7: a negative observed change works the same way", {
   d <- data.frame(gene = "g", obs = -1, pred = -0.1, resid = -0.9,
                   pct = 0.9, mean_expr = 1)
-  expect_equal(attribute_genes(d)$class, "cell-intrinsic")
+  expect_equal(attribute_genes(d)$class, "residual")
 })
 
 
@@ -118,14 +118,17 @@ test_that("P4: duplicated cell-type names are rejected before any arithmetic", {
 })
 
 test_that("P5: duplicated mu row names are rejected", {
+  ## Regression: this test used to pass because `frac` carried a cell type
+  ## that `mu` lacked, not because of the duplication. Here `frac` has exactly
+  ## the cell types `mu` declares, so duplication is the only defect.
   G <- 30
   set.seed(5)
   mu <- matrix(stats::runif(2 * G, 50, 300), nrow = 2,
                dimnames = list(c("A", "A"), paste0("g", seq_len(G))))
-  fr <- matrix(rep(c(0.6, 0.4, 0.3, 0.7), 3), ncol = 2, byrow = TRUE,
-               dimnames = list(paste0("s", 1:6), c("A", "B")))
+  fr <- matrix(rep(1, 6), ncol = 1,
+               dimnames = list(paste0("s", 1:6), "A"))
   expect_error(compose_prediction(fr, mu, c(rep(FALSE, 3), rep(TRUE, 3))),
-               "cell type\\(s\\) in `frac` but not in `mu`")
+               "duplicated cell-type row names")
 })
 
 

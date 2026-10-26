@@ -1,27 +1,49 @@
 Package: cade
 Type: Package
 Title: Composition Attribution of Differential Expression
-Version: 0.9.0
+Version: 6.0.0
 Authors@R: person("Cheng", "Hu", email = "2024184006@hrbmu.edu.cn",
                   role = c("aut", "cre", "cph"),
                   comment = c(ORCID = "0009-0009-4627-0229"))
 Description: Decomposes the observed log2 fold change of each gene in a bulk
     transcriptome comparison into a component implied by a change in cell-type
-    composition and a residual component attributable to regulation within
-    cells, and gates that decomposition with explicit diagnostics. Provides
+    composition and a residual component, and gates that decomposition with
+    explicit diagnostics. The residual is an algebraic remainder: it equals the
+    case group's deviation from the reference minus the control group's
+    deviation, and is not a within-cell effect unless the control group can be
+    shown to match the reference. Provides
     calibration that separates filtering by expression level (valid) from
     filtering by effect size (circular), reference-quality checks including a
     dual-reference comparison, automatic input validation that stops on a
     log-scaled or misaligned reference, a known-answer self test, and a
-    pseudo-bulk simulator. The framework is described in Hu (2026)
-    <doi:10.5281/zenodo.23609651>.
+    pseudo-bulk simulator. Version 3 adds uncertainty-propagating decomposition with
+      calibrated intervals, empirical null calibration of the residual from
+      normal-versus-normal comparisons, and reference diagnostics. Version 4
+      adds consistency diagnostics: marker-based calibration of the composition
+      term per cell type, and cross-cohort agreement of the composition term
+      versus the observed change, which shows that the former is reproducible
+      across cohorts while the latter is platform-limited. Version 5 closes a
+      silent misalignment bug: genes present in obs but absent from mu were
+      previously recycled by position, giving wrong residuals with no error. Version 6 adds five functions and
+    two breaking changes: `convention` selects mean-of-log
+    (limma-compatible, now the default) or log-of-mean, which differ by 0.14
+    in the comp-obs correlation on real data; `null_permutation()` supplies an
+    exact permutation test over reference columns; `cor_ci()` requires the
+    resampling unit to be stated; `calibrate_by_layer()` fits calibration per
+    anatomical layer; `verify_deposit()` performs deposit-integrity checks
+    A1-A3; and `granularity_crossed()` runs the reference-granularity crossed
+    design, whose r is computed without deconvolution and whose absolute
+    values are therefore not comparable with the companion paper. The framework
+      is described in Hu (2026)
+    <doi:10.5281/zenodo.23598561>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports: stats, utils
-Suggests: testthat (>= 3.0.0), limma, ggplot2
+Suggests: testthat (>= 3.0.0), limma, ggplot2, BayesPrism, Seurat, knitr,
+    rmarkdown
 Config/testthat/edition: 3
 LazyData: true
-URL: https://github.com/ChengHu2024/cade
-BugReports: https://github.com/ChengHu2024/cade/issues
+URL: https://doi.org/10.5281/zenodo.23598561
+BugReports: https://doi.org/10.5281/zenodo.23598561
 Config/roxygen2/version: 8.1.1

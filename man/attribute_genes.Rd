@@ -11,7 +11,7 @@ attribute_genes(decomp, lower = 0.3, upper = 0.7, min_obs = 0)
 
 \item{lower, upper}{Thresholds on `pct = resid / obs`.
 `pct <= lower` -> "composition-driven" (the residual explains little of
-the observed change); `pct >= upper` -> "cell-intrinsic"; otherwise
+the observed change); `pct >= upper` -> "residual"; otherwise
 "mixed".}
 
 \item{min_obs}{Genes with `|obs|` below this are labelled "unchanged"

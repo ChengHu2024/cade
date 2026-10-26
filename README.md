@@ -4,14 +4,13 @@
     <img src="https://gcore.jsdelivr.net/gh/ChengHu2024/cade@main/branding/logo-for-light.png" width="400" alt="cade">
   </picture>
 </p>
-
 # cade
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ChengHu2024/cade/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ChengHu2024/cade/actions/workflows/R-CMD-check.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23609651.svg)](https://doi.org/10.5281/zenodo.23609651)
-[![Version](https://img.shields.io/badge/version-0.9.0-informational.svg)](https://doi.org/10.5281/zenodo.23609651)
+[![Version](https://img.shields.io/badge/version-6.0.0-informational.svg)](https://doi.org/10.5281/zenodo.23609651)
 <!-- badges: end -->
 
 **Composition Attribution of Differential Expression**
@@ -44,7 +43,7 @@ conditions checkable rather than assumed.
 devtools::install_github("ChengHu2024/cade")
 
 # or from the archived tarball
-install.packages("cade_0.9.0.tar.gz", repos = NULL, type = "source")
+install.packages("cade_6.0.0.tar.gz", repos = NULL, type = "source")
 
 library(cade)
 self_test()
@@ -133,13 +132,13 @@ of this package; it is documented in `inst/CHANGELOG-2026-10-24.md`.
 
 ## What it looks like
 
-![portrait](branding/portrait.png)
+![portrait](https://gcore.jsdelivr.net/gh/ChengHu2024/cade@main/branding/portrait.png)
 
 A real, unedited console session — nothing in these images is hand-written:
 
 | | |
 |---|---|
-| ![session-A](branding/session-A.png) | ![session-B](branding/session-B.png) |
+| ![session-A](https://gcore.jsdelivr.net/gh/ChengHu2024/cade@main/branding/session-A.png) | ![session-B](https://gcore.jsdelivr.net/gh/ChengHu2024/cade@main/branding/session-B.png) |
 | The normal path | The package refusing bad input |
 
 ---
@@ -203,7 +202,7 @@ the known-answer results quoted above. You can run both yourself.
 @software{cade2026,
   author    = {Hu, Cheng},
   title     = {CADE: composition attribution of differential expression
-               (R package, v0.9.0)},
+               (R package, v6.0.0)},
   year      = {2026},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.23609651},

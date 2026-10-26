@@ -2,7 +2,7 @@
 % Please edit documentation in R/01-decompose.R
 \name{decompose_composition}
 \alias{decompose_composition}
-\title{Decompose observed log2 fold changes into composition and cell-intrinsic parts}
+\title{Decompose observed log2 fold changes into composition and a residual part}
 \usage{
 decompose_composition(
   obs,
@@ -10,7 +10,8 @@ decompose_composition(
   mu,
   is_case,
   mean_expr = NULL,
-  validate = TRUE
+  validate = TRUE,
+  convention = c("mean_of_log", "log_of_mean")
 )
 }
 \arguments{
@@ -28,6 +29,13 @@ of `mu` weighted by the pooled composition.}
 
 \item{validate}{Run [check_inputs()] before decomposing. Default `TRUE`;
 set `FALSE` only inside functions that have already validated.}
+
+\item{convention}{Sample-aggregation convention; see
+[compose_prediction()]. Stored on the result as
+`attr(x, "convention")`. **The convention changes the answer**: on
+GSE232911, `mean_of_log` gives a comp-obs correlation of 0.2846 and
+`log_of_mean` gives 0.4251. It must be reported alongside any
+`comp`-`obs` agreement statistic.}
 }
 \value{
 A data frame of class `cade_decomp` with columns `gene`, `obs`,
@@ -36,7 +44,7 @@ A data frame of class `cade_decomp` with columns `gene`, `obs`,
   composition of each group.
 }
 \description{
-Decompose observed log2 fold changes into composition and cell-intrinsic parts
+Decompose observed log2 fold changes into composition and a residual part
 }
 \details{
 `compose_prediction()` is the only place where the composition term is
@@ -47,6 +55,25 @@ error. The checks that stop it are structural (misalignment, wrong length,
 non-finite values) and semantic (a `mu` that is log-scaled rather than
 linear). Warnings are printed but do not stop the computation.
 }
+\section{What `resid` is and is not}{
+
+`resid` is `obs - pred`. Writing `d_case` and `d_ctrl` for the two groups'
+deviations from the reference, the residual is
+`resid = d_case - d_ctrl`.
+
+This is an algebraic identity. It holds for every input, including a
+reference matrix that is pure noise (verified: max error 9e-16 with a random
+reference), so it carries no evidence about the reference and no evidence
+that the residual measures regulation within cells.
+
+`d_ctrl` is never estimated. Whenever the control samples differ from the
+reference, `resid` is shifted by that difference. With zero within-cell
+change in both groups, a reference whose cell-type profiles are swapped
+produces residuals as large as -5.5. Treat `resid` as an unexplained
+remainder, not as a within-cell effect, unless the control group can be
+shown to match the reference.
+}
+
 \examples{
 set.seed(1)
 mu <- matrix(stats::runif(2 * 12, 30, 400), nrow = 2,

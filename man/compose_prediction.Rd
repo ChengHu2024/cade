@@ -4,7 +4,13 @@
 \alias{compose_prediction}
 \title{Compose a composition-implied log2 fold change}
 \usage{
-compose_prediction(frac, mu, is_case, genes = NULL)
+compose_prediction(
+  frac,
+  mu,
+  is_case,
+  genes = NULL,
+  convention = c("mean_of_log", "log_of_mean")
+)
 }
 \arguments{
 \item{frac}{A matrix or data frame of cell-type fractions, one row per
@@ -18,6 +24,14 @@ genes in columns, on a LINEAR scale. Row names must be cell-type labels.}
 case samples.}
 
 \item{genes}{Optional character vector restricting the output.}
+
+\item{convention}{How to aggregate over samples. `"mean_of_log"` (default)
+takes the log2 of each sample's predicted bulk and then averages within
+group; this matches limma's logFC. `"log_of_mean"` averages the
+proportions within group first and then takes the log2 ratio, which is
+what most deconvolution pipelines report. **The two are not
+interchangeable**: on GSE232911 they differ by 0.14 in the resulting
+comp-obs correlation. Always report which one was used.}
 }
 \value{
 A named numeric vector of log2 fold changes, one per gene. `NA` where

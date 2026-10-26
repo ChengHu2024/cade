@@ -4,10 +4,10 @@
 # 目的：不是证明"能跑"，而是找出"什么条件下会失效"。
 # 每种场景都有已知答案，用 score_simulation() 量化恢复度。
 # ============================================================================
-.libPaths(c(file.path("..", ".Rlib"), .libPaths()))
+.libPaths(c("C:/文献/主动脉瘤_从头重算_20261022/packages/.Rlib", .libPaths()))
 suppressPackageStartupMessages({ library(cade); library(limma) })
 
-OUT <- "output"
+OUT <- "C:/文献/主动脉瘤_从头重算_20261022/results/package_validation"
 dir.create(OUT, showWarnings = FALSE, recursive = TRUE)
 
 ## ---------- 公共设置 ----------

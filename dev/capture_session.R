@@ -1,11 +1,11 @@
 # ============================================================================
 # 捕获 CADE 的真实控制台会话（不手写任何输出，全部来自实际调用）
 # ============================================================================
-.libPaths(c(file.path("..", ".Rlib"), .libPaths()))
+.libPaths(c("C:/文献/主动脉瘤_从头重算_20261022/packages/.Rlib", .libPaths()))
 suppressPackageStartupMessages({ library(cade); library(limma) })
 set.seed(42)
 
-OUT <- "branding"
+OUT <- "C:/文献/主动脉瘤_从头重算_20261022/packages/cade/branding"
 dir.create(OUT, showWarnings = FALSE, recursive = TRUE)
 LOG <- file.path(OUT, "console_session.txt")
 

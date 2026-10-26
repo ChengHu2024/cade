@@ -23,7 +23,7 @@ attribute_sensitivity(
 }
 \value{
 A data frame with one row per gene and the fraction of thresholds
-  at which the gene is labelled `cell-intrinsic`.
+  at which the gene is labelled `residual`.
 }
 \description{
 How stable is a gene's label across thresholds?

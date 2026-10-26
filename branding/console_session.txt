@@ -1,0 +1,134 @@
+
+==============================================================
+# 1. 载入
+==============================================================
+
+> library(cade)
+
+==============================================================
+# 2. 先问她能不能用
+==============================================================
+
+> self_test()
+cade self-test
+  R 4.6.1
+  cade 0.9.0
+  400 genes, 20 vs 20 samples, noise 0.05
+
+  [PASS] composition term recovers the truth        measured 1.0000  (> 0.99)
+  [PASS] injected within-cell change recovered      measured 0.9984  (in (0.90, 1.10))
+  [PASS] no false positives above tolerance         measured 0.0000  (< 0.02)
+
+  self-test PASSED
+
+==============================================================
+# 3. 造一份有标准答案的数据
+==============================================================
+
+> mu <- matrix(runif(3*300, 5, 400), 3, dimnames = list(ct, gen))
+3 细胞类型 x 300 基因
+
+> sim <- simulate_pseudobulk(mu, frac_ctrl = c(VSMC=.70, Macrophage=.10, Fibroblast=.20),
+                   frac_case = c(VSMC=.15, Macrophage=.40, Fibroblast=.45),
+                   n_ctrl = 20, n_case = 20, intrinsic = c(COL1A1 = 1.2), seed = 7)
+bulk: 40 样本 x 300 基因
+
+> sim$truth[sim$truth$gene %in% c("MYH11","CD68","COL1A1"), ]
+   gene composition intrinsic     total
+  MYH11  -1.4718499       0.0 -1.471850
+   CD68   0.9474730       0.0  0.947473
+ COL1A1   0.5421812       1.2  1.742181
+
+==============================================================
+# 4. 拆
+==============================================================
+
+> length(obs); dim(frac)
+obs: 300 基因（由 limma 从 bulk 算出） 
+frac: 40 样本 x 3 细胞类型（由反卷积算出） 
+
+> d <- decompose_composition(obs, frac, mu, sim$is_case)
+
+> d
+<cade decomposition> 300 genes
+  observed log2FC   [-1.71, +1.78]
+  composition term  [-1.73, +1.52]
+  residual          [-0.14, +1.24]
+
+> as.data.frame(d)[order(-abs(d$resid)), ][1:4, c("gene","obs","pred","resid")]
+   gene       obs      pred      resid
+ COL1A1 1.7820548 0.5421812  1.2398736
+   g145 1.1935556 1.3381050 -0.1445493
+   g181 0.3103959 0.2010005  0.1093954
+   g147 1.1396284 1.2424371 -0.1028087
+
+==============================================================
+# 5. 判断她的话能不能信
+==============================================================
+
+> check_calibration(d)
+ level             label   n     slope   intercept        r2   pearson
+  0.00         all genes 300 0.9930962 0.004271064 0.9840491 0.9919925
+  0.50 top 50% expressed 150 1.0171965 0.008641741 0.9526192 0.9760221
+  0.75 top 25% expressed  75 1.0741850 0.019754182 0.8762288 0.9360709
+ median_pred_error
+        0.02701633
+        0.02778199
+        0.02879748
+
+> calibration_verdict(cal)
+composition prediction is informative: slope 1.07 (R2 0.88) on the top 25% expressed stratum (n = 75) 
+
+==============================================================
+# 6. 对照真值打分
+==============================================================
+
+> score_simulation(d, sim$truth, "COL1A1")
+ n_gene cor_pred median_error_pred cor_resid recovery_intrinsic
+    300        1                 0 0.8788698           1.033228
+ false_positive_rate
+                   0
+
+==============================================================
+# 7. 归类
+==============================================================
+
+> a <- attribute_genes(d, min_obs = 0.3)
+
+> table(a$class)
+
+composition-driven              mixed     over-predicted          unchanged 
+                90                  2                100                108 
+
+==============================================================
+# 8. 给她错的输入，她拒绝
+==============================================================
+
+> decompose_composition(obs, frac, log2(mu + 1), sim$is_case)
+Error: input validation failed:
+  * the largest per-cell mean in `mu` is 10.3. A linear CP10k reference normally exceeds 30 for at least one gene. `mu` looks log-scaled (or otherwise compressed); the ratio inside log2() would be meaningless. Pass a LINEAR matrix.
+Run check_inputs() for the full report.
+
+> colnames(frac_bad) <- c("VSMC","VSMC","Fibroblast")  # 重复列名
+Error: input validation failed:
+  * `frac` has duplicated cell-type names: VSMC
+  * cell type(s) present in `mu` but not in `frac`: Macrophage
+Run check_inputs() for the full report.
+
+==============================================================
+# 9. 参考合不合格，也先查
+==============================================================
+
+> check_reference(rep(ct, c(600, 30, 300)), min_cells = 100)
+$by_type
+   cell_type n_cells        pct
+1 Fibroblast     300 0.32258065
+2 Macrophage      30 0.03225806
+3       VSMC     600 0.64516129
+
+$flags
+[1] "cell type(s) with fewer than 100 cells: Macrophage"
+
+$ok
+[1] FALSE
+

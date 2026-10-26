@@ -80,7 +80,7 @@ check_reference <- function(cell_type, sample = NULL, min_cells = 100,
     if (length(group) != n_total) stop("`group` length mismatch.")
     if (!any(group %in% c("normal", "control", "healthy")))
       flags <- c(flags, paste("reference contains no normal/control cells;",
-                              "composition and cell-intrinsic effects cannot be",
+                              "composition and residual effects cannot be",
                               "separated with such a reference"))
   }
 

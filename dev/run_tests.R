@@ -1,5 +1,5 @@
 suppressPackageStartupMessages({ library(testthat) })
-pkg <- "."
+pkg <- "C:/文献/主动脉瘤_从头重算_20261022/packages/cade"
 cat("=== load_all ===\n")
 ok <- tryCatch({ pkgload::load_all(pkg, quiet = TRUE); TRUE },
                error = function(e) { cat("load failed:", conditionMessage(e), "\n"); FALSE })
