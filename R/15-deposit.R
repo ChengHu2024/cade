@@ -619,7 +619,7 @@ verify_deposit <- function(intensity = NULL, detection_p = NULL,
                                   paste(names(marginal)[marginal],
                                         collapse = ", ")))
   reason_txt <- if (length(reasons))
-    paste0("（", paste(reasons, collapse = "；"), "）") else ""
+    paste0("\uff08", paste(reasons, collapse = "\uff1b"), "\uff09") else ""
 
   ## =========================================================================
   ## Printable report
@@ -630,66 +630,66 @@ verify_deposit <- function(intensity = NULL, detection_p = NULL,
   verdict_txt <- switch(verdict, ok = "OK", suspect = "SUSPECT", fail = "FAIL")
 
   a1_line <- if (is.na(a1$pass)) {
-    sprintf("  A1 强度-检出P值一致性: SKIP（%s）", a1$note)
+    sprintf("  A1 \u5f3a\u5ea6-\u68c0\u51faP\u503c\u4e00\u81f4\u6027: SKIP\uff08%s\uff09", a1$note)
   } else {
-    sprintf(paste0("  A1 强度-检出P值一致性: %s；最差 |rho| = %.3f",
-                   "（阈值 %.2f），%d/%d 列未达标，最差列 %s，符号约定 %s"),
+    sprintf(paste0("  A1 \u5f3a\u5ea6-\u68c0\u51faP\u503c\u4e00\u81f4\u6027: %s\uff1b\u6700\u5dee |rho| = %.3f",
+                   "\uff08\u9608\u503c %.2f\uff09\uff0c%d/%d \u5217\u672a\u8fbe\u6807\uff0c\u6700\u5dee\u5217 %s\uff0c\u7b26\u53f7\u7ea6\u5b9a %s"),
             status_txt(a1$pass), a1$worst_rho, min_rho,
             a1$n_fail, length(a1$rho_per_column), a1$worst_column,
             a1$sign_convention)
   }
   a2_line <- if (is.na(a2$pass)) {
-    sprintf("  A2 平台指纹: SKIP（%s）", a2$reference_note)
+    sprintf("  A2 \u5e73\u53f0\u6307\u7eb9: SKIP\uff08%s\uff09", a2$reference_note)
   } else {
-    sprintf("  A2 平台指纹: %s；rho = %.3f（阈值 %.2f）",
+    sprintf("  A2 \u5e73\u53f0\u6307\u7eb9: %s\uff1brho = %.3f\uff08\u9608\u503c %.2f\uff09",
             status_txt(a2$pass), a2$rho, min_fingerprint)
   }
   a3_line <- if (is.na(a3$pass)) {
-    sprintf("  A3 加性恒等式: SKIP（%s）", a3$note)
+    sprintf("  A3 \u52a0\u6027\u6052\u7b49\u5f0f: SKIP\uff08%s\uff09", a3$note)
   } else {
-    sprintf(paste0("  A3 加性恒等式: %s；slope = %.4f，残差 SD = %.3g",
-                   "（阈值 %.0e），最大残差 = %.3g，未解释方差 = %.3g，",
-                   "逐值相同列 %d 对"),
+    sprintf(paste0("  A3 \u52a0\u6027\u6052\u7b49\u5f0f: %s\uff1bslope = %.4f\uff0c\u6b8b\u5dee SD = %.3g",
+                   "\uff08\u9608\u503c %.0e\uff09\uff0c\u6700\u5927\u6b8b\u5dee = %.3g\uff0c\u672a\u89e3\u91ca\u65b9\u5dee = %.3g\uff0c",
+                   "\u9010\u503c\u76f8\u540c\u5217 %d \u5bf9"),
             status_txt(a3$pass), a3$slope, a3$residual_sd,
             10^(-tolerance_digits), a3$max_resid, a3$unexplained_var,
             length(a3$value_identical_columns))
   }
   perm_line <- if (isTRUE(rec$ok)) {
-    sprintf("  置换恢复: 成功；%s；π %s",
+    sprintf("  \u7f6e\u6362\u6062\u590d: \u6210\u529f\uff1b%s\uff1b\u03c0 %s",
             rec$reason,
             if (isTRUE(rec$is_identity)) {
-              "为恒等置换（行序与参考一致）"
+              "\u4e3a\u6052\u7b49\u7f6e\u6362\uff08\u884c\u5e8f\u4e0e\u53c2\u8003\u4e00\u81f4\uff09"
             } else {
-              "为非恒等置换，intensity[π, ] 与 reference_intensity 同序"
+              "\u4e3a\u975e\u6052\u7b49\u7f6e\u6362\uff0cintensity[\u03c0, ] \u4e0e reference_intensity \u540c\u5e8f"
             })
   } else {
-    sprintf("  置换恢复: 未完成（%s）", rec$reason)
+    sprintf("  \u7f6e\u6362\u6062\u590d: \u672a\u5b8c\u6210\uff08%s\uff09", rec$reason)
   }
   coverage_line <- if (length(skip_names)) {
-    sprintf("  覆盖: 已执行 %s；已请求但无法执行 %s",
+    sprintf("  \u8986\u76d6: \u5df2\u6267\u884c %s\uff1b\u5df2\u8bf7\u6c42\u4f46\u65e0\u6cd5\u6267\u884c %s",
             paste(exec_names, collapse = "/"), paste(skip_names, collapse = "/"))
   } else {
-    sprintf("  覆盖: 已执行全部请求的检查（%s）",
+    sprintf("  \u8986\u76d6: \u5df2\u6267\u884c\u5168\u90e8\u8bf7\u6c42\u7684\u68c0\u67e5\uff08%s\uff09",
             paste(exec_names, collapse = "/"))
   }
   verdict_line <- switch(
     verdict,
-    ok = "  判定: OK —— 所有已执行的检查通过。",
-    suspect = sprintf("  判定: SUSPECT —— 无硬性失败，但存在接近阈值的测量或无法执行的检查。%s",
+    ok = "  \u5224\u5b9a: OK \u2014\u2014 \u6240\u6709\u5df2\u6267\u884c\u7684\u68c0\u67e5\u901a\u8fc7\u3002",
+    suspect = sprintf("  \u5224\u5b9a: SUSPECT \u2014\u2014 \u65e0\u786c\u6027\u5931\u8d25\uff0c\u4f46\u5b58\u5728\u63a5\u8fd1\u9608\u503c\u7684\u6d4b\u91cf\u6216\u65e0\u6cd5\u6267\u884c\u7684\u68c0\u67e5\u3002%s",
                       reason_txt),
-    fail = sprintf("  判定: FAIL —— 沉积文件未能忠实代表所分析的数据。%s",
+    fail = sprintf("  \u5224\u5b9a: FAIL \u2014\u2014 \u6c89\u79ef\u6587\u4ef6\u672a\u80fd\u5fe0\u5b9e\u4ee3\u8868\u6240\u5206\u6790\u7684\u6570\u636e\u3002%s",
                    reason_txt)
   )
 
   summary_lines <- c(
-    "cade 沉积矩阵核验报告",
-    sprintf("  矩阵: %d 探针 x %d 样本", nrow(I), ncol(I)),
+    "cade \u6c89\u79ef\u77e9\u9635\u6838\u9a8c\u62a5\u544a",
+    sprintf("  \u77e9\u9635: %d \u63a2\u9488 x %d \u6837\u672c", nrow(I), ncol(I)),
     a1_line, a2_line, a3_line, perm_line, coverage_line,
-    sprintf("  结论: %s", verdict_txt),
+    sprintf("  \u7ed3\u8bba: %s", verdict_txt),
     verdict_line,
-    paste0("  说明: 本报告只陈述数值判定，不对成因作任何推断；原案例的结论",
-           "措辞为 “the deposited file does not faithfully represent the ",
-           "analysed data”。")
+    paste0("  \u8bf4\u660e: \u672c\u62a5\u544a\u53ea\u9648\u8ff0\u6570\u503c\u5224\u5b9a\uff0c\u4e0d\u5bf9\u6210\u56e0\u4f5c\u4efb\u4f55\u63a8\u65ad\uff1b\u539f\u6848\u4f8b\u7684\u7ed3\u8bba",
+           "\u63aa\u8f9e\u4e3a \u201cthe deposited file does not faithfully represent the ",
+           "analysed data\u201d\u3002")
   )
 
   out <- list(
