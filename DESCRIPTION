@@ -36,7 +36,7 @@ Description: Decomposes the observed log2 fold change of each gene in a bulk
     values are therefore not comparable with the companion paper. The framework
       is described in Hu (2026)
     <doi:10.5281/zenodo.23598561>.
-License: MIT + file LICENSE
+License: MIT + file LICENCE
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports: stats, utils
