@@ -8,7 +8,7 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ChengHu2024/cade/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ChengHu2024/cade/actions/workflows/R-CMD-check.yaml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) <!-- License metadata note: see NEWS.md -->
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23609650.svg)](https://doi.org/10.5281/zenodo.23609650)
 [![Version](https://img.shields.io/badge/version-6.0.0-informational.svg)](https://doi.org/10.5281/zenodo.23609650)
 <!-- badges: end -->

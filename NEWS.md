@@ -2,6 +2,21 @@
 
 Released 2026-10-25.
 
+## Repository note: license metadata
+
+The GitHub repository and the Zenodo deposit of v6.0.0 differ **only** in
+license metadata. No R code, tests, documentation, data, or reported results
+differ, and `R CMD check` reports `Status: OK` for both.
+
+- **Zenodo v6.0.0 tarball**: `License: MIT + file LICENSE`, where `LICENSE`
+  holds only the R DCF stub (`YEAR:` / `COPYRIGHT HOLDER:`).
+- **GitHub `main`**: `License: MIT + file LICENCE`, where `LICENSE` holds the
+  full MIT text (so GitHub can detect the license) and `LICENCE` holds the R
+  DCF stub.
+
+R and GitHub require mutually exclusive `LICENSE` contents, so the two cannot
+be satisfied by a single file. This is a metadata-only divergence.
+
 ## Breaking changes
 
 - **`compose_prediction()` and `decompose_composition()` gain a `convention`
